@@ -194,8 +194,9 @@ Observable.just(1,2,3,4)
        .map(mapOperator2) // IO 线程，由 observeOn() 指定
        .observeOn(AndroidSchedulers.mainThread)
        .subscribe(subscriber);  // Android 主线程，由 observeOn() 指定
-
+```
      ![图4](https://github.com/flyingtercel/RxJavaComps/blob/master/rxjava/src/main/res/drawable/t3.png)
+``` 
      图中共有 5 处含有对事件的操作。由图中可以看出，①和②两处受第一个 subscribeOn() 影响，运行在红色线程；③和④处受第一个 observeOn() 的影响，运行在绿色线程；⑤处受第二个 onserveOn() 影响，运行在紫色线程；而第二个 subscribeOn() ，由于在通知过程中线程就被第一个 subscribeOn() 截断，因此对整个流程并没有任何影响。这里也就回答了前面的问题：当使用了多个 subscribeOn() 的时候，只有第一个 subscribeOn() 起作用。
 ```
  doOnSubscribe()的使用：
